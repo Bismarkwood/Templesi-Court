@@ -1,12 +1,11 @@
 import { useState, useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
-import { X, CheckCircle, ArrowRight, ArrowLeft, CreditCard } from 'lucide-react';
+import { X, CheckCircle, ArrowRight, ArrowLeft } from 'lucide-react';
 import { useHotel } from '../../context/HotelContext';
-import { getInitials, getAvatarColor, formatDateV2 } from '../../utils/formatters';
+import { getInitials, getAvatarColor } from '../../utils/formatters';
 import './AddReservationModal.css';
 
 interface Props { open: boolean; onClose: () => void; }
-
 const STEPS = ['Guest', 'Room', 'Dates & Pricing', 'Payment', 'Confirm'];
 
 const AddReservationModal = ({ open, onClose }: Props) => {
@@ -20,7 +19,6 @@ const AddReservationModal = ({ open, onClose }: Props) => {
   const [checkout, setCheckout] = useState('');
   const [paymentOption, setPaymentOption] = useState<'none' | 'deposit' | 'full'>('none');
   const [paymentMethod, setPaymentMethod] = useState('Credit Card');
-  const [depositAmount, setDepositAmount] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const availableRooms = useMemo(() => rooms.filter(r => r.status === 'Available'), [rooms]);
@@ -30,7 +28,7 @@ const AddReservationModal = ({ open, onClose }: Props) => {
   const existingGuest = guests.find(g => g.name.toLowerCase() === guestName.toLowerCase().trim());
 
   useEffect(() => {
-    if (open) { setStep(0); setGuestName(''); setGuestEmail(''); setGuestPhone(''); setSelectedRoom(''); setCheckin(''); setCheckout(''); setPaymentOption('none'); setDepositAmount(''); setErrors({}); document.body.style.overflow = 'hidden'; }
+    if (open) { setStep(0); setGuestName(''); setGuestEmail(''); setGuestPhone(''); setSelectedRoom(''); setCheckin(''); setCheckout(''); setPaymentOption('none'); setErrors({}); document.body.style.overflow = 'hidden'; }
     else document.body.style.overflow = '';
     return () => { document.body.style.overflow = ''; };
   }, [open]);
@@ -112,35 +110,90 @@ const AddReservationModal = ({ open, onClose }: Props) => {
                     {selectedRoom === r.id && <CheckCircle size={18} color="#4F46E5" />}
                   </div>
                 ))}
-                {availableRooms.length === 0 && <div style={{ textAlign: 'center', padding: 32, color: '#A0A4B8', fontSize: 13 }}>No rooms available. All rooms are occupied, reserved, or under maintenance.</div>}
+                {availableRooms.length === 0 && <div style={{ textAlign: 'center', padding: 32, color: '#A0A4B8', fontSize: 13 }}>No rooms available.</div>}
               </div>
             </>
           )}
 
           {/* Step 2: Dates & Pricing */}
           {step === 2 && (
-            <>
-              <div className="ar-two-col">
-                <div>
-                  <div className="ar-section-label">Stay Dates</div>
-                  <div className="ar-card">
-                    <div className="ar-row2">
-                      <div className="ar-field"><label className="ar-label">Check-in</label><input className="ar-input" type="date" value={checkin} onChange={e => setCheckin(e.target.value)} />{errors.checkin && <span className="ar-error">{errors.checkin}</span>}</div>
-                      <div className="ar-field"><label className="ar-label">Check-out</label><input className="ar-input" type="date" value={checkout} onChange={e => setCheckout(e.target.value)} />{errors.checkout && <span className="ar-error">{errors.checkout}</span>}</div>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div className="ar-section-label">Pricing Summary</div>
-                  <div className="ar-card">
-                    <div className="ar-info-grid">
-                      <div className="ar-info-card"><div className="ar-info-label">Room</div><div className="ar-info-value">{room?.type} {selectedRoom}</div></div>
-                      <div className="ar-info-card"><div className="ar-info-label">Rate</div><div className="ar-info-value">${room?.rate}/night</div></div>
-                      <div className="ar-info-card"><div className="ar-info-label">Nights</div><div className="ar-info-value">{nights || '—'}</div></div>
-                      <div className="ar-info-card"><div className="ar-info-label">Total</div><div className="ar-info-value" style={{ fontSize: 18, color: '#4F46E5' }}>${total.toLocaleString()}</div></div>
-                    </div>
+            <div className="ar-two-col">
+              <div>
+                <div className="ar-section-label">Stay Dates</div>
+                <div className="ar-card">
+                  <div className="ar-row2">
+                    <div className="ar-field"><label className="ar-label">Check-in</label><input className="ar-input" type="date" value={checkin} onChange={e => setCheckin(e.target.value)} />{errors.checkin && <span className="ar-error">{errors.checkin}</span>}</div>
+                    <div className="ar-field"><label className="ar-label">Check-out</label><input className="ar-input" type="date" value={checkout} onChange={e => setCheckout(e.target.value)} />{errors.checkout && <span className="ar-error">{errors.checkout}</span>}</div>
                   </div>
                 </div>
               </div>
+              <div>
+                <div className="ar-section-label">Pricing Summary</div>
+                <div className="ar-card">
+                  <div className="ar-info-grid">
+                    <div className="ar-info-card"><div className="ar-info-label">Room</div><div className="ar-info-value">{room?.type} {selectedRoom}</div></div>
+                    <div className="ar-info-card"><div className="ar-info-label">Rate</div><div className="ar-info-value">${room?.rate}/night</div></div>
+                    <div className="ar-info-card"><div className="ar-info-label">Nights</div><div className="ar-info-value">{nights || '—'}</div></div>
+                    <div className="ar-info-card"><div className="ar-info-label">Total</div><div className="ar-info-value" style={{ fontSize: 18, color: '#4F46E5' }}>${total.toLocaleString()}</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Step 3: Payment */}
+          {step === 3 && (
+            <>
+              <div className="ar-section-label">Payment Option</div>
+              <div className="ar-payment-options" style={{ marginBottom: 16 }}>
+                {(['none', 'deposit', 'full'] as const).map(opt => (
+                  <button key={opt} className={`ar-payment-option ${paymentOption === opt ? 'active' : ''}`} onClick={() => setPaymentOption(opt)}>
+                    {opt === 'none' ? 'No Payment Yet' : opt === 'deposit' ? 'Deposit' : 'Full Payment'}
+                  </button>
+                ))}
+              </div>
+              {paymentOption !== 'none' && (
+                <div className="ar-card">
+                  <div className="ar-field">
+                    <label className="ar-label">Payment Method</label>
+                    <select className="ar-select" value={paymentMethod} onChange={e => setPaymentMethod(e.target.value)}>
+                      <option>Credit Card</option><option>Debit Card</option><option>Cash</option><option>Bank Transfer</option>
+                    </select>
+                  </div>
+                  <div className="ar-info-grid">
+                    <div className="ar-info-card"><div className="ar-info-label">Total</div><div className="ar-info-value">${total.toLocaleString()}</div></div>
+                    <div className="ar-info-card"><div className="ar-info-label">Paying</div><div className="ar-info-value" style={{ color: '#059669' }}>{paymentOption === 'full' ? `$${total.toLocaleString()}` : 'Deposit'}</div></div>
+                  </div>
+                </div>
+              )}
             </>
           )}
+
+          {/* Step 4: Confirm */}
+          {step === 4 && (
+            <div className="ar-success">
+              <div className="ar-success-icon"><CheckCircle size={32} /></div>
+              <div className="ar-success-title">Reservation Created</div>
+              <div className="ar-success-sub">
+                {guestName} · Room {selectedRoom} · {nights} night{nights > 1 ? 's' : ''} · ${total.toLocaleString()}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Footer */}
+        <div className="ar-footer">
+          <div>{step > 0 && step < 4 && <button className="ar-btn" onClick={() => setStep(s => s - 1)}><ArrowLeft size={14} /> Back</button>}</div>
+          <div style={{ display: 'flex', gap: 8 }}>
+            <button className="ar-btn" onClick={onClose}>{step === 4 ? 'Done' : 'Cancel'}</button>
+            {step < 3 && <button className="ar-btn ar-btn-primary" onClick={() => { if (validateStep(step)) setStep(s => s + 1); }}>Continue <ArrowRight size={14} /></button>}
+            {step === 3 && <button className="ar-btn ar-btn-success" onClick={handleCreate}><CheckCircle size={14} /> Create Reservation</button>}
+          </div>
+        </div>
+      </div>
+    </div>,
+    document.body
+  );
+};
+
+export default AddReservationModal;
