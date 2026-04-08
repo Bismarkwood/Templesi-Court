@@ -1,8 +1,8 @@
-﻿import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import RoomModal from '../components/ui/RoomModal';
 import Modal from '../components/ui/Modal';
 import Pagination from '../components/ui/Pagination';
-import { Plus, Search, Download, Building2, DoorOpen, Wrench, BedDouble, Eye, UserCheck, LogOut, CheckCircle } from 'lucide-react';
+import { Plus, Search, Download, Building2, DoorOpen, Wrench, BedDouble, Eye } from 'lucide-react';
 import { ROOMS as INITIAL_ROOMS, RESERVATIONS, HOUSEKEEPING, MAINTENANCE_ISSUES } from '../data/mockData';
 import './Rooms.css';
 import '../styles/modules.css';
