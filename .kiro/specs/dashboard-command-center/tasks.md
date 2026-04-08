@@ -1,0 +1,40 @@
+# Tasks — Dashboard Command Center
+
+- [x] 1. Extend mock data module
+  - [x] 1.1 Add RESERVATIONS array with 6+ records (id, guest, room, checkin, checkout, total, status, paymentStatus) `[Req 13.1]`
+  - [x] 1.2 Add STAFF array with 5+ records (id, name, role, shift, status, rating, email) `[Req 13.2]`
+  - [x] 1.3 Add MAINTENANCE_ISSUES array with 3+ records (id, room, issue, priority, reportedAt, status) `[Req 13.3]`
+  - [x] 1.4 Add HOUSEKEEPING array with room readiness records (room, status, priority) `[Req 13.4]`
+  - [x] 1.5 Extend ACTIVITY_FEED to 8+ entries covering all event types `[Req 13.5]`
+  - [x] 1.6 Extend GUESTS to 6+ records `[Req 13.6]`
+  - [x] 1.7 Extend INVOICES to 6+ records with varied statuses and dates `[Req 13.7]`
+  - [x] 1.8 Verify cross-referential consistency (room IDs, guest names match across arrays) `[Req 13.8]`
+- [x] 2. Create pure helper functions for dashboard computations
+  - [x] 2.1 Create `src/utils/dashboardHelpers.ts` with computeOccupancyRate, computeAvailableRooms, computeArrivalsToday, computeDeparturesToday, computeRevenueToday, computePendingInvoices functions `[Req 1]`
+  - [x] 2.2 Add filterActivityFeed function `[Req 2]`
+  - [x] 2.3 Add filterUpcomingCheckins function `[Req 3]`
+  - [x] 2.4 Add groupRoomsByFloor and getRoomStatusColor functions `[Req 4]`
+  - [x] 2.5 Add computeHousekeepingCounts function `[Req 5]`
+  - [x] 2.6 Add computeMaintenanceSummary function `[Req 6]`
+  - [x] 2.7 Add computeRevenueSummary and computeBillingHealth functions `[Req 7]`
+  - [x] 2.8 Add groupStaffByRole and detectCoverageGaps functions `[Req 8]`
+  - [x] 2.9 Add identifyRepeatGuests and identifyGuestsWithUnpaidBalances functions `[Req 9]`
+  - [x] 2.10 Add generateAlerts function `[Req 10]`
+- [x] 3. Build Dashboard CSS
+  - [x] 3.1 Replace Dashboard.css with new widget styles: zone containers, KPI row grid (6 cols), widget card base, feed entries, room grid/tiles, legend, housekeeping counts, maintenance entries, revenue panel, alert entries, quick actions bar `[Req 14.3]`
+- [x] 4. Build Dashboard page with all widgets
+  - [x] 4.1 Build KpiCard component and KPI row (6 cards: Occupancy Rate, Available Rooms, Arrivals Today, Departures Today, Revenue Today, Pending Invoices) `[Req 1]`
+  - [x] 4.2 Build ActivityFeed widget with filter pills `[Req 2]`
+  - [x] 4.3 Build CheckInPanel widget `[Req 3]`
+  - [x] 4.4 Build RoomStatusMap widget with floor sections, color-coded tiles, and legend `[Req 4]`
+  - [x] 4.5 Build HousekeepingWidget with count cards and priority items `[Req 5]`
+  - [x] 4.6 Build MaintenanceTracker widget with summary header and issue list `[Req 6]`
+  - [x] 4.7 Build RevenuePanel widget with summary figures, payment lists, and billing health `[Req 7]`
+  - [x] 4.8 Build StaffPanel widget grouped by role with coverage warnings `[Req 8]`
+  - [x] 4.9 Build GuestIntelligencePanel widget with VIP, unpaid, and activity sections `[Req 9]`
+  - [x] 4.10 Build AlertsCenter widget with severity-sorted alerts `[Req 10]`
+  - [x] 4.11 Build QuickActionsBar with navigation buttons `[Req 11]`
+  - [x] 4.12 Assemble full Dashboard layout with all 6 zones `[Req 12]`
+- [x] 5. Verify build and diagnostics
+  - [x] 5.1 Run getDiagnostics on all modified files to confirm zero errors
+  - [x] 5.2 Verify Dashboard renders within existing Layout.tsx without modifications `[Req 12.3]`

@@ -1,0 +1,270 @@
+/* ═══════════════════════════════════════════════════
+   Check-In & Check-Out — Front Desk Operations
+   ═══════════════════════════════════════════════════ */
+
+.cio-kpis {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+}
+
+.cio-kpi {
+    border-radius: 16px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #fff;
+    transition: transform 0.15s ease;
+    border: none;
+}
+
+.cio-kpi:hover {
+    transform: translateY(-2px);
+}
+
+.cio-kpi-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.cio-kpi-val {
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.cio-kpi-label {
+    font-size: 10.5px;
+    font-weight: 600;
+    opacity: 0.85;
+    margin-top: 2px;
+}
+
+/* Tabs */
+.cio-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    background: #fff;
+    border-radius: 14px 14px 0 0;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-bottom: none;
+    overflow: hidden;
+}
+
+.cio-tab {
+    flex: 1;
+    padding: 12px 20px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #8B8FA3;
+    cursor: pointer;
+    border: none;
+    background: none;
+    text-align: center;
+    position: relative;
+    transition: color 0.15s ease;
+}
+
+.cio-tab:hover {
+    color: #4F46E5;
+}
+
+.cio-tab.active {
+    color: #4F46E5;
+    background: #fff;
+}
+
+.cio-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 20%;
+    right: 20%;
+    height: 2px;
+    background: #4F46E5;
+    border-radius: 2px;
+}
+
+.cio-tab-count {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 7px;
+    border-radius: 10px;
+    background: #F0F1F5;
+    color: #6B6F80;
+    margin-left: 6px;
+}
+
+.cio-tab.active .cio-tab-count {
+    background: #EEF2FF;
+    color: #4F46E5;
+}
+
+/* Table card */
+.cio-table-card {
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 0 0 14px 14px;
+    overflow: hidden;
+}
+
+.cio-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cio-table th {
+    text-align: left;
+    padding: 11px 16px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #A0A4B8;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    background: #FAFBFD;
+}
+
+.cio-table td {
+    padding: 12px 16px;
+    vertical-align: middle;
+    font-size: 13px;
+    color: #4A4D5E;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.cio-table tbody tr {
+    cursor: pointer;
+    transition: background 0.12s ease;
+}
+
+.cio-table tbody tr:hover {
+    background: rgba(99, 102, 241, 0.02);
+}
+
+.cio-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.cio-guest-name {
+    font-weight: 600;
+    color: #1E1E2D;
+}
+
+.cio-room-pill {
+    display: inline-flex;
+    padding: 3px 10px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    background: #F0F1F5;
+    color: #6B6F80;
+}
+
+.cio-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.cio-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+.cio-action-btn {
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    background: #fff;
+    color: #4A4D5E;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: border-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+}
+
+.cio-action-btn:hover {
+    border-color: #6366F1;
+    color: #4F46E5;
+}
+
+.cio-action-btn:active {
+    transform: scale(0.95);
+}
+
+.cio-action-btn-primary {
+    background: #4F46E5;
+    color: #fff;
+    border-color: #4F46E5;
+}
+
+.cio-action-btn-primary:hover {
+    background: #4338CA;
+    color: #fff;
+}
+
+/* Toolbar */
+.cio-toolbar {
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 14px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.cio-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    max-width: 280px;
+    background: #F7F8FC;
+    border-radius: 10px;
+    padding: 8px 14px;
+    border: 1px solid transparent;
+    transition: border-color 0.15s ease;
+}
+
+.cio-search:focus-within {
+    border-color: rgba(99, 102, 241, 0.3);
+}
+
+.cio-search input {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 13px;
+    font-weight: 500;
+    color: #1E1E2D;
+    width: 100%;
+}
+
+.cio-search input::placeholder {
+    color: #A0A4B8;
+}
+
+.cio-empty {
+    text-align: center;
+    padding: 40px;
+    font-size: 13px;
+    color: #A0A4B8;
+}

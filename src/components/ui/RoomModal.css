@@ -1,0 +1,576 @@
+/* ═══════════════════════════════════════════════════
+   Room Command Modal — Premium Room Profile
+   ═══════════════════════════════════════════════════ */
+
+.room-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: rgba(15, 23, 42, 0);
+    backdrop-filter: blur(0px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    transition: background 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+.room-modal-backdrop.open {
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(6px);
+    pointer-events: all;
+}
+
+.room-modal {
+    background: #fff;
+    border-radius: 24px;
+    width: 1100px;
+    max-width: 95vw;
+    height: 88vh;
+    max-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    transform: scale(0.95) translateY(12px);
+    opacity: 0;
+    transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1), opacity 0.25s ease;
+    pointer-events: none;
+}
+
+.room-modal-backdrop.open .room-modal {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* Header */
+.room-modal-header {
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    flex-shrink: 0;
+}
+
+.room-modal-room-num {
+    font-size: 28px;
+    font-weight: 900;
+    color: #1E1E2D;
+    letter-spacing: -0.03em;
+}
+
+.room-modal-badges {
+    display: flex;
+    gap: 8px;
+    flex: 1;
+}
+
+.room-modal-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.room-modal-header-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.room-modal-header-btn {
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: #fff;
+    color: #4A4D5E;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: border-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+}
+
+.room-modal-header-btn:hover {
+    border-color: #6366F1;
+    color: #4F46E5;
+}
+
+.room-modal-header-btn:active {
+    transform: scale(0.96);
+}
+
+.room-modal-close {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: #F7F8FC;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #6B6F80;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.room-modal-close:hover {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+
+/* Hero */
+.room-modal-hero {
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: #1E1E2D;
+    display: flex;
+    align-items: flex-end;
+    padding: 20px 28px;
+}
+
+.room-modal-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.1) 50%, transparent 100%);
+}
+
+.room-modal-hero-content {
+    position: relative;
+    z-index: 1;
+    color: #fff;
+}
+
+.room-modal-hero-title {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+.room-modal-hero-sub {
+    font-size: 13px;
+    font-weight: 500;
+    opacity: 0.85;
+}
+
+.room-modal-hero-chips {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.room-modal-hero-chip {
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 11px;
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Tabs */
+.room-modal-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 0 28px;
+    flex-shrink: 0;
+}
+
+.room-modal-tab {
+    padding: 12px 20px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #8B8FA3;
+    cursor: pointer;
+    border: none;
+    background: none;
+    position: relative;
+    transition: color 0.15s ease;
+}
+
+.room-modal-tab:hover {
+    color: #4F46E5;
+}
+
+.room-modal-tab.active {
+    color: #4F46E5;
+}
+
+.room-modal-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 20px;
+    right: 20px;
+    height: 2px;
+    background: #4F46E5;
+    border-radius: 2px;
+}
+
+/* Body */
+.room-modal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 28px;
+}
+
+/* Info grid */
+.room-modal-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.room-modal-info-card {
+    background: #F7F8FC;
+    border-radius: 14px;
+    padding: 16px 18px;
+    transition: background 0.15s ease;
+}
+
+.room-modal-info-card:hover {
+    background: #EEEEF5;
+}
+
+.room-modal-info-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #A0A4B8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+}
+
+.room-modal-info-value {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1E1E2D;
+}
+
+.room-modal-info-sub {
+    font-size: 11px;
+    color: #8B8FA3;
+    margin-top: 2px;
+}
+
+/* Section */
+.room-modal-section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #A0A4B8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+    margin-top: 24px;
+}
+
+.room-modal-section-title:first-child {
+    margin-top: 0;
+}
+
+/* Amenities */
+.room-modal-amenities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.room-modal-amenity {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    background: #F0F1F5;
+    color: #4A4D5E;
+    transition: background 0.12s ease;
+}
+
+.room-modal-amenity:hover {
+    background: #E8E9F0;
+}
+
+/* Detail rows */
+.room-modal-detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+    font-size: 13px;
+}
+
+.room-modal-detail-row:last-child {
+    border-bottom: none;
+}
+
+.room-modal-detail-label {
+    color: #8B8FA3;
+    font-weight: 500;
+}
+
+.room-modal-detail-value {
+    color: #1E1E2D;
+    font-weight: 600;
+}
+
+/* Operations card */
+.room-modal-ops-card {
+    background: #F7F8FC;
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-top: 16px;
+}
+
+.room-modal-ops-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1E1E2D;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Footer */
+.room-modal-footer {
+    padding: 16px 28px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.room-modal-footer-btn {
+    padding: 9px 20px;
+    border-radius: 10px;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: #fff;
+    color: #4A4D5E;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s ease;
+}
+
+.room-modal-footer-btn:hover {
+    border-color: #6366F1;
+    color: #4F46E5;
+}
+
+.room-modal-footer-btn:active {
+    transform: scale(0.97);
+}
+
+.room-modal-footer-btn-primary {
+    background: #4F46E5;
+    color: #fff;
+    border-color: #4F46E5;
+}
+
+.room-modal-footer-btn-primary:hover {
+    background: #4338CA;
+}
+
+
+/* ═══ EDIT MODE ═══ */
+
+.room-edit-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.room-edit-col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.room-edit-section-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #A0A4B8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.room-edit-card {
+    background: #F7F8FC;
+    border-radius: 16px;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.room-edit-row2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.room-edit-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.room-edit-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #6B6F80;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.room-edit-input,
+.room-edit-select,
+.room-edit-textarea {
+    padding: 10px 14px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #1E1E2D;
+    background: #fff;
+    outline: none;
+    transition: border-color 0.15s ease;
+    font-family: inherit;
+}
+
+.room-edit-input:focus,
+.room-edit-select:focus,
+.room-edit-textarea:focus {
+    border-color: #6366F1;
+}
+
+.room-edit-select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23999' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+}
+
+.room-edit-textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+.room-edit-hint {
+    font-size: 10.5px;
+    color: #A0A4B8;
+    font-weight: 500;
+}
+
+/* Status pills */
+.room-edit-status-pills {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.room-edit-status-pill {
+    padding: 7px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: #fff;
+    color: #4A4D5E;
+    transition: all 0.15s ease;
+}
+
+.room-edit-status-pill:hover:not(.disabled) {
+    border-color: #6366F1;
+    color: #4F46E5;
+}
+
+.room-edit-status-pill.active {
+    background: #4F46E5;
+    color: #fff;
+    border-color: #4F46E5;
+}
+
+.room-edit-status-pill.disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+/* Amenity chips */
+.room-edit-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.room-edit-chip {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: #fff;
+    color: #4A4D5E;
+    transition: all 0.15s ease;
+}
+
+.room-edit-chip:hover {
+    border-color: #6366F1;
+    color: #4F46E5;
+}
+
+.room-edit-chip.selected {
+    background: #4F46E5;
+    color: #fff;
+    border-color: #4F46E5;
+}
+
+/* Toast inside modal */
+.room-modal-toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    background: #059669;
+    border: 1px solid #047857;
+    z-index: 100000;
+    animation: rmToastIn 0.3s ease forwards;
+}
+
+@keyframes rmToastIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

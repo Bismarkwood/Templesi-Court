@@ -1,0 +1,418 @@
+/* Add Reservation Modal — Premium Booking Studio */
+.ar-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: rgba(15, 23, 42, 0);
+    backdrop-filter: blur(0px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    transition: background 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+.ar-backdrop.open {
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(6px);
+    pointer-events: all;
+}
+
+.ar-modal {
+    background: #fff;
+    border-radius: 24px;
+    width: 900px;
+    max-width: 95vw;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    transform: scale(0.95) translateY(12px);
+    opacity: 0;
+    transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1), opacity 0.25s ease;
+    pointer-events: none;
+}
+
+.ar-backdrop.open .ar-modal {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+    pointer-events: all;
+}
+
+.ar-header {
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    flex-shrink: 0;
+}
+
+.ar-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: #1E1E2D;
+}
+
+.ar-subtitle {
+    font-size: 12px;
+    color: #8B8FA3;
+    margin-top: 2px;
+}
+
+.ar-close {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: #F7F8FC;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #6B6F80;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.ar-close:hover {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.ar-stepper {
+    display: flex;
+    gap: 0;
+    padding: 16px 28px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    flex-shrink: 0;
+}
+
+.ar-step {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #A0A4B8;
+}
+
+.ar-step.active {
+    color: #4F46E5;
+}
+
+.ar-step.done {
+    color: #059669;
+}
+
+.ar-step-num {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    border: 2px solid #D1D5DB;
+    color: #A0A4B8;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+
+.ar-step.active .ar-step-num {
+    border-color: #4F46E5;
+    color: #4F46E5;
+    background: #EEF2FF;
+}
+
+.ar-step.done .ar-step-num {
+    border-color: #059669;
+    color: #fff;
+    background: #059669;
+}
+
+.ar-step-line {
+    flex: 1;
+    height: 2px;
+    background: #E5E7EB;
+    margin: 0 8px;
+}
+
+.ar-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 28px;
+}
+
+.ar-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.ar-section-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #A0A4B8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+}
+
+.ar-card {
+    background: #F7F8FC;
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+}
+
+.ar-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 12px;
+}
+
+.ar-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #6B6F80;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.ar-input,
+.ar-select {
+    padding: 10px 14px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #1E1E2D;
+    background: #fff;
+    outline: none;
+    transition: border-color 0.15s ease;
+    font-family: inherit;
+}
+
+.ar-input:focus,
+.ar-select:focus {
+    border-color: #6366F1;
+}
+
+.ar-select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23999' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+}
+
+.ar-error {
+    font-size: 10.5px;
+    color: #E11D48;
+    font-weight: 600;
+}
+
+.ar-row2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+/* Room selection cards */
+.ar-room-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 280px;
+    overflow-y: auto;
+}
+
+.ar-room-option {
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    background: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: border-color 0.15s ease;
+}
+
+.ar-room-option:hover {
+    border-color: #6366F1;
+}
+
+.ar-room-option.selected {
+    border-color: #4F46E5;
+    background: #EEF2FF;
+}
+
+.ar-room-option-num {
+    font-size: 16px;
+    font-weight: 800;
+    color: #1E1E2D;
+    min-width: 40px;
+}
+
+.ar-room-option-info {
+    flex: 1;
+}
+
+.ar-room-option-type {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1E1E2D;
+}
+
+.ar-room-option-meta {
+    font-size: 11px;
+    color: #8B8FA3;
+}
+
+/* Payment options */
+.ar-payment-options {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.ar-payment-option {
+    padding: 10px 18px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: #fff;
+    color: #4A4D5E;
+    transition: all 0.15s ease;
+}
+
+.ar-payment-option:hover {
+    border-color: #6366F1;
+    color: #4F46E5;
+}
+
+.ar-payment-option.active {
+    border-color: #4F46E5;
+    color: #4F46E5;
+    background: #EEF2FF;
+}
+
+/* Info grid */
+.ar-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.ar-info-card {
+    background: #F7F8FC;
+    border-radius: 14px;
+    padding: 14px 18px;
+}
+
+.ar-info-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #A0A4B8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+}
+
+.ar-info-value {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1E1E2D;
+}
+
+/* Success */
+.ar-success {
+    text-align: center;
+    padding: 32px 20px;
+}
+
+.ar-success-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #ECFDF5;
+    color: #059669;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+}
+
+.ar-success-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: #1E1E2D;
+    margin-bottom: 6px;
+}
+
+.ar-success-sub {
+    font-size: 13px;
+    color: #8B8FA3;
+}
+
+/* Footer */
+.ar-footer {
+    padding: 16px 28px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.ar-btn {
+    padding: 9px 20px;
+    border-radius: 10px;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: #fff;
+    color: #4A4D5E;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s ease;
+}
+
+.ar-btn:hover {
+    border-color: #6366F1;
+    color: #4F46E5;
+}
+
+.ar-btn:active {
+    transform: scale(0.97);
+}
+
+.ar-btn-primary {
+    background: #4F46E5;
+    color: #fff;
+    border-color: #4F46E5;
+}
+
+.ar-btn-primary:hover {
+    background: #4338CA;
+}
+
+.ar-btn-success {
+    background: #059669;
+    color: #fff;
+    border-color: #059669;
+}
+
+.ar-btn-success:hover {
+    background: #047857;
+}

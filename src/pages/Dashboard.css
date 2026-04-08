@@ -1,0 +1,707 @@
+/* ═══════════════════════════════════════════════════════
+   Dashboard v5 — Clean, Interactive, No Shadows/Glow
+   ═══════════════════════════════════════════════════════ */
+
+/* ─── Page ─── */
+.dash-page {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ─── Grid ─── */
+.d-grid {
+    display: grid;
+    gap: 16px;
+}
+
+.d-g2 {
+    grid-template-columns: 1fr 1fr;
+}
+
+.d-g3 {
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.d-g4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.d-g8 {
+    grid-template-columns: repeat(8, 1fr);
+}
+
+.d-g23 {
+    grid-template-columns: 2fr 1fr;
+}
+
+/* ─── Hero header ─── */
+.dash-hero {
+    background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 50%, #8B5CF6 100%);
+    border-radius: 20px;
+    padding: 24px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+    overflow: hidden;
+}
+
+.dash-hero-title {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 3px;
+}
+
+.dash-hero-sub {
+    font-size: 12.5px;
+    font-weight: 500;
+    opacity: 0.85;
+}
+
+.dash-hero-chips {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.dash-hero-chip {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.18);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.2s ease;
+}
+
+.dash-hero-chip:hover {
+    background: rgba(255, 255, 255, 0.28);
+}
+
+.dash-hero-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.dash-hero-btn {
+    padding: 8px 16px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.dash-hero-btn:active {
+    transform: scale(0.96);
+}
+
+.dash-hero-btn-primary {
+    background: rgba(255, 255, 255, 0.95);
+    color: #4F46E5;
+}
+
+.dash-hero-btn-primary:hover {
+    background: #fff;
+}
+
+.dash-hero-btn-ghost {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.dash-hero-btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* ─── Section label ─── */
+.d-section {
+    font-size: 11.5px;
+    font-weight: 800;
+    color: #8B8FA3;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding-bottom: 2px;
+    margin-top: 4px;
+}
+
+
+/* ─── Card ─── */
+.d-card {
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.d-card:hover {
+    border-color: rgba(99, 102, 241, 0.25);
+    transform: translateY(-1px);
+}
+
+.d-card-head {
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.d-card-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1E1E2D;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.d-card-body {
+    padding: 16px 20px;
+}
+
+.d-card-body-compact {
+    padding: 12px 20px;
+}
+
+.d-card-primary {
+    border-left: 3px solid #6366F1;
+}
+
+.d-card-success {
+    border-left: 3px solid #22C55E;
+}
+
+.d-card-warning {
+    border-left: 3px solid #F59E0B;
+}
+
+.d-card-danger {
+    border-left: 3px solid #F43F5E;
+}
+
+/* ─── Badge ─── */
+.d-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 20px;
+    background: #F0F0F5;
+    color: #6B6F80;
+    transition: background 0.15s ease;
+}
+
+.d-badge-indigo {
+    background: #EEF2FF;
+    color: #4F46E5;
+}
+
+.d-badge-green {
+    background: #ECFDF5;
+    color: #059669;
+}
+
+.d-badge-amber {
+    background: #FFFBEB;
+    color: #D97706;
+}
+
+.d-badge-red {
+    background: #FFF1F2;
+    color: #E11D48;
+}
+
+/* ─── KPI Card ─── */
+.d-kpi {
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 18px;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+    cursor: default;
+}
+
+.d-kpi:hover {
+    border-color: rgba(99, 102, 241, 0.3);
+    transform: translateY(-2px);
+}
+
+.d-kpi-row1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.d-kpi-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+.d-kpi:hover .d-kpi-icon {
+    transform: scale(1.1);
+}
+
+.d-kpi-trend {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.d-kpi-trend.up {
+    background: #ECFDF5;
+    color: #059669;
+}
+
+.d-kpi-trend.down {
+    background: #FFF1F2;
+    color: #E11D48;
+}
+
+.d-kpi-val {
+    font-size: 24px;
+    font-weight: 800;
+    color: #1E1E2D;
+    letter-spacing: -0.03em;
+    line-height: 1;
+}
+
+.d-kpi-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #8B8FA3;
+}
+
+.d-kpi-sub {
+    font-size: 10px;
+    font-weight: 500;
+    color: #A0A4B8;
+}
+
+/* ─── Sparkline ─── */
+.d-spark {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+}
+
+.d-spark-bar {
+    flex: 1;
+    border-radius: 3px 3px 0 0;
+    min-width: 4px;
+    opacity: 0.45;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.d-spark-bar:hover {
+    opacity: 1;
+    transform: scaleY(1.1);
+    transform-origin: bottom;
+}
+
+.d-spark-bar:last-child {
+    opacity: 1;
+}
+
+
+/* ─── List items ─── */
+.d-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+    font-size: 12.5px;
+    transition: padding-left 0.15s ease, background 0.15s ease;
+    border-radius: 6px;
+}
+
+.d-item:hover {
+    padding-left: 4px;
+    background: rgba(99, 102, 241, 0.02);
+}
+
+.d-item:last-child {
+    border-bottom: none;
+}
+
+.d-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+
+.d-item:hover .d-dot {
+    transform: scale(1.4);
+}
+
+.d-item-msg {
+    flex: 1;
+    font-weight: 500;
+    color: #4A4D5E;
+}
+
+.d-item-time {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: #A0A4B8;
+    white-space: nowrap;
+}
+
+.d-item-name {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #1E1E2D;
+}
+
+.d-item-meta {
+    font-size: 10.5px;
+    color: #8B8FA3;
+    margin-top: 1px;
+}
+
+.d-item-info {
+    flex: 1;
+}
+
+/* ─── Room tiles ─── */
+.d-floor {
+    margin-bottom: 14px;
+}
+
+.d-floor:last-child {
+    margin-bottom: 0;
+}
+
+.d-floor-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #A0A4B8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+}
+
+.d-rooms {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+}
+
+.d-room {
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: default;
+    transition: transform 0.15s ease, border-color 0.2s ease;
+    border: 1.5px solid transparent;
+}
+
+.d-room:hover {
+    transform: scale(1.08);
+    border-color: currentColor;
+}
+
+.d-room-sub {
+    font-size: 8.5px;
+    font-weight: 600;
+    opacity: 0.7;
+}
+
+.d-legend {
+    display: flex;
+    gap: 14px;
+    padding-top: 10px;
+    margin-top: 6px;
+    border-top: 1px solid rgba(0, 0, 0, 0.04);
+    font-size: 10.5px;
+    font-weight: 600;
+    color: #A0A4B8;
+}
+
+.d-legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+/* ─── Bar chart ─── */
+.d-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.d-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.d-bar-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #8B8FA3;
+    min-width: 70px;
+    text-align: right;
+}
+
+.d-bar-track {
+    flex: 1;
+    height: 22px;
+    background: #F4F5FA;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.d-bar-fill {
+    height: 100%;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #fff;
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.d-bar-row:hover .d-bar-fill {
+    filter: brightness(1.1);
+}
+
+.d-bar-val {
+    font-size: 11px;
+    font-weight: 700;
+    color: #1E1E2D;
+    min-width: 40px;
+    text-align: right;
+}
+
+/* ─── Donut ─── */
+.d-donut-wrap {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.d-donut {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.d-donut:hover {
+    transform: scale(1.05);
+}
+
+.d-donut::after {
+    content: '';
+    position: absolute;
+    width: 58px;
+    height: 58px;
+    background: #fff;
+    border-radius: 50%;
+}
+
+.d-donut-center {
+    position: relative;
+    z-index: 1;
+    font-size: 17px;
+    font-weight: 800;
+    color: #1E1E2D;
+}
+
+.d-donut-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.d-donut-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #4A4D5E;
+}
+
+.d-donut-legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+/* ─── Metrics ─── */
+.d-metrics {
+    display: grid;
+    gap: 8px;
+}
+
+.d-metric {
+    text-align: center;
+    padding: 10px 8px;
+    background: #F7F8FC;
+    border-radius: 12px;
+    transition: background 0.15s ease;
+}
+
+.d-metric:hover {
+    background: #EEEEF5;
+}
+
+.d-metric-val {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1E1E2D;
+}
+
+.d-metric-label {
+    font-size: 9.5px;
+    font-weight: 600;
+    color: #A0A4B8;
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+
+/* ─── Progress ─── */
+.d-progress {
+    height: 6px;
+    background: #F0F0F5;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-top: 8px;
+}
+
+.d-progress-fill {
+    height: 100%;
+    border-radius: 6px;
+    background: #22C55E;
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ─── Pill ─── */
+.d-pill {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: transform 0.12s ease;
+}
+
+.d-pill:hover {
+    transform: scale(1.05);
+}
+
+/* ─── Filters ─── */
+.d-filters {
+    display: flex;
+    gap: 4px;
+}
+
+.d-filter {
+    padding: 3px 10px;
+    border-radius: 14px;
+    font-size: 10.5px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s ease, transform 0.1s ease;
+}
+
+.d-filter:active {
+    transform: scale(0.95);
+}
+
+.d-filter.active {
+    background: #4F46E5;
+    color: #fff;
+}
+
+.d-filter.inactive {
+    background: #F0F0F5;
+    color: #6B6F80;
+}
+
+.d-filter.inactive:hover {
+    background: #E8E9F0;
+}
+
+/* ─── Empty ─── */
+.d-empty {
+    text-align: center;
+    padding: 16px;
+    font-size: 11.5px;
+    color: #A0A4B8;
+    font-weight: 500;
+}
+
+/* ─── Quick actions ─── */
+.d-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.d-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 14px;
+    border-radius: 12px;
+    font-size: 11.5px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    background: #fff;
+    color: #4A4D5E;
+    transition: border-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+}
+
+.d-action:hover {
+    border-color: #6366F1;
+    color: #4F46E5;
+}
+
+.d-action:active {
+    transform: scale(0.96);
+}

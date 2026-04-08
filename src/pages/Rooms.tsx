@@ -1,0 +1,56 @@
+﻿import { useState, useMemo, useEffect } from 'react';
+import RoomModal from '../components/ui/RoomModal';
+import Modal from '../components/ui/Modal';
+import Pagination from '../components/ui/Pagination';
+import { Plus, Search, Download, Building2, DoorOpen, Wrench, BedDouble, Eye, UserCheck, LogOut, CheckCircle } from 'lucide-react';
+import { ROOMS as INITIAL_ROOMS, RESERVATIONS, HOUSEKEEPING, MAINTENANCE_ISSUES } from '../data/mockData';
+import './Rooms.css';
+import '../styles/modules.css';
+const ITEMS_PER_PAGE = 10;
+const ROOM_TYPES = ['Standard','Deluxe','Suite'];
+const CREATION_STATUSES = ['Available','Maintenance'];
+const ALL_AMENITIES = ['Wi-Fi','TV','Air Conditioning','En-suite Bathroom','Mini-bar','Balcony','Desk','Safe','Refrigerator','Jacuzzi','Coffee Maker','Smart TV'];
+const TYPE_DEFAULTS: Record<string,{rate:number;capacity:number;amenities:string[]}> = {Standard:{rate:120,capacity:2,amenities:['Wi-Fi','TV','En-suite Bathroom']},Deluxe:{rate:180,capacity:3,amenities:['Wi-Fi','TV','En-suite Bathroom','Mini-bar','Balcony']},Suite:{rate:280,capacity:4,amenities:['Wi-Fi','TV','En-suite Bathroom','Mini-bar','Balcony','Jacuzzi','Desk','Safe']}};
+const EMPTY_FORM = {roomNumber:'',floor:'',type:'Standard',status:'Available',capacity:'2',rate:'120',amenities:['Wi-Fi','TV','En-suite Bathroom'] as string[],bedConfig:'',view:'',notes:''};
+const STATUS_STYLES: Record<string,{bg:string;color:string;dot:string}> = {Available:{bg:'#ECFDF5',color:'#059669',dot:'#059669'},Occupied:{bg:'#FFF1F2',color:'#E11D48',dot:'#E11D48'},Reserved:{bg:'#EEF2FF',color:'#4F46E5',dot:'#4F46E5'},Maintenance:{bg:'#FFFBEB',color:'#D97706',dot:'#D97706'}};
+type Room = typeof INITIAL_ROOMS[0];
+const Rooms = () => {
+  const [rooms,setRooms]=useState(INITIAL_ROOMS);
+  const [filterFloor,setFilterFloor]=useState('All');
+  const [filterStatus,setFilterStatus]=useState('All');
+  const [searchQuery,setSearchQuery]=useState('');
+  const [currentPage,setCurrentPage]=useState(1);
+  const [showModal,setShowModal]=useState(false);
+  const [form,setForm]=useState(EMPTY_FORM);
+  const [errors,setErrors]=useState<Record<string,string>>({});
+  const [toast,setToast]=useState('');
+  const [selectedRoom,setSelectedRoom]=useState<Room|null>(null);
+  const guestByRoom=useMemo(()=>{const m:Record<string,string>={};RESERVATIONS.filter(r=>r.status==='Checked-in').forEach(r=>{m[r.room]=r.guest});return m},[]);
+  const hkByRoom=useMemo(()=>{const m:Record<string,string>={};HOUSEKEEPING.forEach(h=>{m[h.room]=h.status});return m},[]);
+  const mntByRoom=useMemo(()=>{const m:Record<string,string>={};MAINTENANCE_ISSUES.filter(i=>i.status==='Open'||i.status==='In Progress').forEach(i=>{m[i.room]=i.issue});return m},[]);
+  const filtered=useMemo(()=>rooms.filter(r=>{const f1=filterFloor==='All'||r.floor.toString()===filterFloor;const f2=filterStatus==='All'||r.status===filterStatus;const f3=r.id.toLowerCase().includes(searchQuery.toLowerCase())||r.type.toLowerCase().includes(searchQuery.toLowerCase());return f1&&f2&&f3}),[filterFloor,filterStatus,searchQuery,rooms]);
+  const totalPages=Math.ceil(filtered.length/ITEMS_PER_PAGE);const paginated=filtered.slice((currentPage-1)*ITEMS_PER_PAGE,currentPage*ITEMS_PER_PAGE);const floors=[...new Set(rooms.map(r=>r.floor))].sort();
+  const openModal=()=>{setForm(EMPTY_FORM);setErrors({});setShowModal(true)};const closeModal=()=>setShowModal(false);
+  const handleTypeChange=(t:string)=>{const d=TYPE_DEFAULTS[t]||TYPE_DEFAULTS.Standard;setForm(f=>({...f,type:t,rate:String(d.rate),capacity:String(d.capacity),amenities:[...d.amenities]}))};
+  const toggleAmenity=(a:string)=>setForm(f=>({...f,amenities:f.amenities.includes(a)?f.amenities.filter(x=>x!==a):[...f.amenities,a]}));
+  const validate=()=>{const e:Record<string,string>={};if(!form.roomNumber.trim())e.roomNumber='Required';else if(rooms.some(r=>r.id===form.roomNumber.trim()))e.roomNumber='Exists';if(!form.floor.trim())e.floor='Required';if(Number(form.rate)<=0)e.rate='>0';if(Number(form.capacity)<1)e.capacity='Min 1';setErrors(e);return Object.keys(e).length===0};
+  const handleSave=()=>{if(!validate())return;setRooms(p=>[...p,{id:form.roomNumber.trim(),type:form.type,rate:Number(form.rate),capacity:Number(form.capacity),floor:Number(form.floor),status:form.status}]);closeModal();setToast('Room '+form.roomNumber.trim()+' added');setTimeout(()=>setToast(''),3000)};
+  return (<div className="module-page animate-in" style={{gap:14}}>
+    <header className="page-header"><div><h2 style={{fontSize:'20px',fontWeight:700,color:'#111',letterSpacing:'-0.3px',marginBottom:'2px'}}>Room Management</h2><p style={{color:'#8B8FA3',fontSize:'12.5px'}}>Inventory, status, and operational readiness.</p></div><div style={{display:'flex',gap:8}}><button className="rm-action-btn"><Download size={14}/> Export</button><button className="rm-action-btn-primary rm-action-btn" onClick={openModal}><Plus size={14}/> Add New Room</button></div></header>
+    <div className="rm-kpis">{[{label:'Total Rooms',val:rooms.length,icon:<Building2 size={18}/>,bg:'linear-gradient(135deg,#4F46E5,#7C3AED)'},{label:'Available',val:rooms.filter(r=>r.status==='Available').length,icon:<DoorOpen size={18}/>,bg:'linear-gradient(135deg,#059669,#10B981)'},{label:'Occupied',val:rooms.filter(r=>r.status==='Occupied').length,icon:<BedDouble size={18}/>,bg:'linear-gradient(135deg,#E11D48,#F43F5E)'},{label:'Maintenance',val:rooms.filter(r=>r.status==='Maintenance').length,icon:<Wrench size={18}/>,bg:'linear-gradient(135deg,#D97706,#F59E0B)'}].map(k=>(<div key={k.label} className="rm-kpi" style={{background:k.bg}}><div className="rm-kpi-icon">{k.icon}</div><div><div className="rm-kpi-val">{k.val}</div><div className="rm-kpi-label">{k.label}</div></div></div>))}</div>
+    <div className="rm-toolbar"><div className="rm-search"><Search size={15} color="#A0A4B8"/><input placeholder="Search room or type..." value={searchQuery} onChange={e=>{setSearchQuery(e.target.value);setCurrentPage(1)}}/></div><div className="rm-divider"/><div className="rm-filters">{['All',...floors.map(String)].map(f=>(<button key={'f'+f} className={'rm-filter '+(filterFloor===f?'active':'inactive')} onClick={()=>{setFilterFloor(f);setCurrentPage(1)}}>{f==='All'?'All Floors':'Floor '+f}</button>))}</div><div className="rm-divider"/><div className="rm-filters">{['All','Available','Occupied','Reserved','Maintenance'].map(s=>(<button key={'s'+s} className={'rm-filter '+(filterStatus===s?'active':'inactive')} onClick={()=>{setFilterStatus(s);setCurrentPage(1)}}>{s}</button>))}</div></div>
+    <div className="rm-table-card">{filtered.length===0?<div className="rm-empty">No rooms match your filters.</div>:(<table className="rm-table"><thead><tr><th style={{width:80}}>Room</th><th style={{width:140}}>Type</th><th style={{width:80}}>Floor</th><th style={{width:90}}>Rate</th><th style={{width:80}}>Cap.</th><th style={{width:130}}>Status</th><th style={{width:160}}>Context</th><th style={{width:100}}>Action</th></tr></thead><tbody>{paginated.map(room=>{const st=STATUS_STYLES[room.status]||STATUS_STYLES.Available;const guest=guestByRoom[room.id];const hk=hkByRoom[room.id];const mnt=mntByRoom[room.id];return(<tr key={room.id} onClick={()=>setSelectedRoom(room)}><td><span className="rm-room-num">{room.id}</span></td><td><div className="rm-type">{room.type}</div><div className="rm-type-sub">{room.capacity}g</div></td><td><span className="rm-floor-pill">F{room.floor}</span></td><td><span className="rm-rate">${room.rate}</span></td><td style={{textAlign:'center'}}>{room.capacity}</td><td><span className="rm-status" style={{background:st.bg,color:st.color}}><span className="rm-status-dot" style={{background:st.dot}}/>{room.status}</span></td><td><span className="rm-guest-info">{guest?'Guest: '+guest:mnt?mnt:hk?'HK: '+hk:'--'}</span></td><td onClick={e=>e.stopPropagation()}><button className="rm-action-btn" onClick={()=>setSelectedRoom(room)}><Eye size={13}/> View</button></td></tr>)})}</tbody></table>)}{totalPages>1&&<div style={{padding:'14px 16px',borderTop:'1px solid rgba(0,0,0,0.04)',display:'flex',justifyContent:'center'}}><Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} itemsPerPage={ITEMS_PER_PAGE} totalItems={filtered.length}/></div>}</div>
+    <RoomModal room={selectedRoom} onClose={()=>setSelectedRoom(null)} guestName={selectedRoom?guestByRoom[selectedRoom.id]:undefined} hkStatus={selectedRoom?hkByRoom[selectedRoom.id]:undefined} mntIssue={selectedRoom?mntByRoom[selectedRoom.id]:undefined} amenities={selectedRoom?TYPE_DEFAULTS[selectedRoom.type]?.amenities:[]}/>
+    <Modal open={showModal} onClose={closeModal} title="Add New Room" wide footer={<><button className="btn-secondary" onClick={closeModal}>Cancel</button><button className="btn-primary" onClick={handleSave}>Save Room</button></>}>
+      <div className="modal-form">
+        <div className="form-section-label">Basic Information</div>
+        <div className="form-row-3"><div className="form-group"><label className="form-label">Room Number</label><input className="form-input" placeholder="e.g. 306" value={form.roomNumber} onChange={e=>setForm(f=>({...f,roomNumber:e.target.value}))}/>{errors.roomNumber&&<span className="form-error">{errors.roomNumber}</span>}</div><div className="form-group"><label className="form-label">Floor</label><select className="form-select" value={form.floor} onChange={e=>setForm(f=>({...f,floor:e.target.value}))}><option value="">Select</option>{[1,2,3,4,5].map(f=><option key={f} value={f}>{f}</option>)}</select>{errors.floor&&<span className="form-error">{errors.floor}</span>}</div><div className="form-group"><label className="form-label">Type</label><select className="form-select" value={form.type} onChange={e=>handleTypeChange(e.target.value)}>{ROOM_TYPES.map(t=><option key={t} value={t}>{t}</option>)}</select></div></div>
+        <div className="form-row-3"><div className="form-group"><label className="form-label">Status</label><select className="form-select" value={form.status} onChange={e=>setForm(f=>({...f,status:e.target.value}))}>{CREATION_STATUSES.map(s=><option key={s} value={s}>{s}</option>)}</select></div><div className="form-group"><label className="form-label">Capacity</label><input className="form-input" type="number" min="1" value={form.capacity} onChange={e=>setForm(f=>({...f,capacity:e.target.value}))}/>{errors.capacity&&<span className="form-error">{errors.capacity}</span>}</div><div className="form-group"><label className="form-label">Rate</label><input className="form-input" type="number" min="1" value={form.rate} onChange={e=>setForm(f=>({...f,rate:e.target.value}))}/>{errors.rate&&<span className="form-error">{errors.rate}</span>}</div></div>
+        <div className="form-section-label">Amenities</div>
+        <div className="form-chips">{ALL_AMENITIES.map(a=>(<button key={a} type="button" className={'form-chip '+(form.amenities.includes(a)?'selected':'')} onClick={()=>toggleAmenity(a)}>{a}</button>))}</div>
+      </div>
+    </Modal>
+    {toast&&<div className="rm-toast">{toast}</div>}
+  </div>);
+};
+export default Rooms;

@@ -1,0 +1,143 @@
+/* Maintenance Module */
+.mt-kpis {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.mt-kpi {
+    border-radius: 16px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #fff;
+    transition: transform 0.15s ease;
+    border: none;
+}
+
+.mt-kpi:hover {
+    transform: translateY(-2px);
+}
+
+.mt-kpi-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.mt-kpi-val {
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.mt-kpi-label {
+    font-size: 10.5px;
+    font-weight: 600;
+    opacity: 0.85;
+    margin-top: 2px;
+}
+
+.mt-table-card {
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.mt-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.mt-table th {
+    text-align: left;
+    padding: 11px 16px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #A0A4B8;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    background: #FAFBFD;
+}
+
+.mt-table td {
+    padding: 14px 16px;
+    vertical-align: middle;
+    font-size: 13px;
+    color: #4A4D5E;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.mt-table tbody tr {
+    transition: background 0.12s ease;
+}
+
+.mt-table tbody tr:hover {
+    background: rgba(99, 102, 241, 0.02);
+}
+
+.mt-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.mt-priority {
+    display: inline-flex;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.mt-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.mt-action-btn {
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    background: #fff;
+    color: #4A4D5E;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: border-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+}
+
+.mt-action-btn:hover {
+    border-color: #6366F1;
+    color: #4F46E5;
+}
+
+.mt-action-btn:active {
+    transform: scale(0.95);
+}
+
+.mt-action-btn-primary {
+    background: #059669;
+    color: #fff;
+    border-color: #059669;
+}
+
+.mt-action-btn-primary:hover {
+    background: #047857;
+    color: #fff;
+}

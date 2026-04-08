@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root {
+    /* Ultra-Premium Fixed Layout Variables */
+    --bg-main: #F8F8F8;
+    --bg-surface: #FFFFFF;
+    --bg-surface-hover: #FAFAFA;
+
+    --text-primary: #111111;
+    --text-secondary: #222222;
+    --text-muted: #555555;
+    --text-light: #AAAAAA;
+
+    --border-color: #EBEBEB;
+    --border-light: #F0F0F0;
+
+    /* Primary Action */
+    --primary: #4F46E5;
+    --primary-hover: #4338CA;
+
+    /* Status Colors & Backgrounds */
+    --status-green: #059669;
+    --status-green-bg: #ECFDF5;
+    --status-light-green: #16A34A;
+    --status-light-green-bg: #F0FDF4;
+    --status-indigo: #4F46E5;
+    --status-indigo-bg: #EEF2FF;
+    --status-amber: #D97706;
+    --status-amber-bg: #FFFBEB;
+    --status-rose: #E11D48;
+    --status-rose-bg: #FFF1F2;
+
+    /* Badges */
+    --badge-bg: #F4F4F4;
+    --badge-text: #555555;
+
+    /* Typography */
+    --font-family: 'Manrope', sans-serif;
+
+    /* Layout Metrics */
+    --sidebar-width: 280px;
+    --header-height: 64px;
+    --radius-lg: 12px;
+    --radius-sm: 6px;
+    --radius-pill: 9999px;
+
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.02);
+    --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-in {
+    animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-main);
+    color: var(--text-secondary);
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+}
+
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.page-content {
+    padding: 32px;
+}
