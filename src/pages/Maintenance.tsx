@@ -1,4 +1,4 @@
-import { Wrench, AlertTriangle, CheckCircle, Clock, Search } from 'lucide-react';
+import { Wrench, AlertTriangle, CheckCircle, Clock } from 'lucide-react';
 import { MAINTENANCE_ISSUES, ROOMS } from '../data/mockData';
 import './Maintenance.css';
 import '../styles/modules.css';

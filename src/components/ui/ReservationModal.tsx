@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { X, Edit3, Calendar, DollarSign, Users, BedDouble, Clock, CheckCircle, UserCheck, LogOut, Receipt, Eye } from 'lucide-react';
+import { X, Edit3, Calendar, DollarSign, BedDouble, CheckCircle, UserCheck, LogOut, Receipt, Eye } from 'lucide-react';
 import { getInitials, getAvatarColor, formatDateV2 } from '../../utils/formatters';
 import { ROOMS, GUESTS, INVOICES } from '../../data/mockData';
 import './ReservationModal.css';
